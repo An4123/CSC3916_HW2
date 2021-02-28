@@ -34,55 +34,56 @@ function getJSONObjectForMovieRequirement(req, stats, msg ){
         message: "No message",
         query: "No query"
     };
-    if (msg != null){
+    if (msg != null){                // set message as message that was passed in a parameter
         json.message = msg
     }
-    if (req.query != null){
+    if (req.query != null){          // set query as query that was in the req parameter     
         json.query = req.query
     }
-    if (stats != null){
+    if (stats != null){              // set status code as status code that was passed in parameter  
         json.status = stats
     }
-    if (req.body != null){
+    if (req.body != null){           // set body as body that was in the req parameter
         json.body = req.body;
     }
-    if(req.headers != null){
+    if(req.headers != null){          // set headers as headers that was in the req parameter
         json.headers = req.headers;
     }
-
-    return json;
+    return json;                      // return json object
 }
+
+
 
 router.post('/signup', function (req, res){
     if (!req.body.username || !req.body.password){
         res.json({success: false, msg: 'please include both username and password to sign up'})
     }   else{
-        var newUser = {
-            username: req.body.username,
-            password: req.body.password
+        var newUser = {                                     // set newUser.username and newUser.password 
+            username: req.body.username,                    // set to req.body.username
+            password: req.body.password                     // set to req.body.password
         };
 
-        db.save(newUser);           // no duplicate checking yet
+        db.save(newUser);                                   // save to fake database for now
 
-        res.json({success: true, msg: 'Successfully created new user'})
+        res.json({success: true, msg: 'Successfully created new user'})         // send json response
     }
 });
 
 
 router.post('/signin', function(req, res){
-    var user = db.findOne(req.body.username)
-    if (!user){
-        res.status(401).send({success: false, msg: "Authentication failed. User not found"});
+    var user = db.findOne(req.body.username)                  // find user name in data base
+    if (!user){                                               // if there is no user name then 
+        res.status(401).send({success: false, msg: "Authentication failed. User not found"});     // then authentication has failed and send response with that message
     } else{
-        if(req.body.password === user.password){
-            var userToken = {
-                            id: user.id,
-                            username: user.username
+        if(req.body.password === user.password){             // else if a user has been found, then check if the password is correct
+            var userToken = {   
+                            id: user.id,                     // set the userToken.id to user.id
+                            username: user.username          // set the userToken.username to user.username
                             };
-            var token = jwt.sign(userToken, process.env.SECRET_KEY);
-            res.json({success: true, token: 'JWT ' + token});
+            var token = jwt.sign(userToken, process.env.SECRET_KEY);                // create a token
+            res.json({success: true, token: 'JWT ' + token});                       // respond with that token
         } else{
-            res.status(401).send({success: false, msg: "Authentication failed."});
+            res.status(401).send({success: false, msg: "Authentication failed."});  // else if the password doesnt match then authentication failed.
         }
     }
 });
@@ -90,50 +91,48 @@ router.post('/signin', function(req, res){
 
 
 router.route('/movie')
-    .delete(authController.isAuthenticated, function (req,res){
-        console.log(req.body);
-        var status = 200;
-        if (req.get("Content-Type")) {
+    .delete(authController.isAuthenticated, function (req,res){                 // use BasicAuth to authenticate user
+        if (req.get("Content-Type")) {                                          // set the response "content-type" to the request "content type"
             res = res.type(req.get('Content-Type'));
         }
-        var o = getJSONObjectForMovieRequirement(req, status, "Movie Deleted");
-        res.json(o);
-
-    })
-    .put(authJwtController.isAuthenticated, function (req,res){
-        console.log(req.body);
-        res = res.status(200);
-        if (req.get("Content-Type")) {
-            res = res.type(req.get('Content-Type'));
-        }
-        var status = 200;
-        var o = getJSONObjectForMovieRequirement(req, status, "Movie Updated");
-        res.json(o);
+        var status = 200;                                                       // if authenticated then set status to 200
+        var o = getJSONObjectForMovieRequirement(req, status, "Movie Deleted"); // set header, status and message using function getJSONObjectForMovieRequirement
+        res.json(o);                                                            // respond with the json format of 'o'
         }
     )
+
+
+    .put(authJwtController.isAuthenticated, function (req,res){                 // use JwtAuthorization to authenticate user
+        if (req.get("Content-Type")) {                                          // set the response "content-type" to the request "content type"
+            res = res.type(req.get('Content-Type'));
+        }
+        var status = 200;
+        var o = getJSONObjectForMovieRequirement(req, status, "Movie Updated"); // set header, status and message using function getJSONObjectForMovieRequirement
+        res.json(o);                                                            // respond with the json format of 'o'
+        }
+    )
+
 
     .post( function (req,res){
-            console.log(req.body);
-            res = res.status(200);
-            if (req.get("Content-Type")) {
+            if (req.get("Content-Type")) {                                        // set the response "content-type" to the request "content type"
                 res = res.type(req.get('Content-Type'));
             }
-            var status = 200;
-            var o = getJSONObjectForMovieRequirement(req, status, "Movie Saved");
-            res.json(o);
+            var status = 200;                                                     // if request is successful then set status to 200
+            var o = getJSONObjectForMovieRequirement(req, status, "Movie Saved"); // set header, status and message using function getJSONObjectForMovieRequirement
+            res.json(o);                                                          // respond with the json format of 'o
         }
     )
+
+
     .get( function (req,res){
-            console.log(req.body);
-            res = res.status(200);
-            if (req.get("Content-Type")) {
-                res = res.type(req.get('Content-Type'));
-            }
-            var status = 200;
-            var o = getJSONObjectForMovieRequirement(req, status, "GET movie");
-            res.json(o);
+        if (req.get("Content-Type")) {                                          // set the response "content-type" to the request "content type"
+            res = res.type(req.get('Content-Type'));
         }
-    )
+        var status = 200;                                                       // if authenticated then set status to 200
+        var o = getJSONObjectForMovieRequirement(req, status, "GET movie");     // set header, status and message using function getJSONObjectForMovieRequirement
+        res.json(o);                                                            // respond with the json format of 'o
+    }
+)
 
 
 app.use('/', router);

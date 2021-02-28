@@ -6,7 +6,7 @@ var BasicStrategy = require('passport-http').BasicStrategy;
 passport.use(new BasicStrategy(
     function(username, password, done) {
         var user = { name: "cu_user"};                         //could have called to a database to look this up
-        if (username === user.name && password === "cu_rules") // tripple equal is type and value; double == is just equal
+        if (username === user.name && password === "cu_rules") // if our user name matches and our password matches then return
         {
             return done(null, user);
         }
