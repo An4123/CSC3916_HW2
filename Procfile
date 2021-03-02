@@ -1,1 +1,1 @@
-web: node server.js -r donenv/config
+web: node server.js
