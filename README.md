@@ -4,4 +4,4 @@ Author: An Vo
 
 Class: CSC3916 - Web API
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/580ea266bb5347d33aca#?env%5BCSC3916_HW2%5D=W3sia2V5Ijoiand0VG9rZW4iLCJ2YWx1ZSI6IkpXVCBleUpoYkdjaU9pSklVekkxTmlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKcFpDSTZJakEzT0RRM1pERXlaVGMwWkdGaE1qYzJNRFl3TURFMFl6RXdaVFUxT1dZeFlUTmpOek5sWkRJaUxDSjFjMlZ5Ym1GdFpTSTZJa0Z1SWl3aWFXRjBJam94TmpFME5UQTJNamN5ZlEuQWVDYW5acG5EemtYd2dKczlqejNlMWRpTVZ0M3NNeWFoMGExTGRweEdCYyIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoidXNyTmFtZSIsInZhbHVlIjoiY3VfdXNlciIsImVuYWJsZWQiOnRydWV9LHsia2V5IjoicGFzc3dyZCIsInZhbHVlIjoiY3VfcnVsZXMiLCJlbmFibGVkIjp0cnVlfSx7ImtleSI6Indyb25nUGFzcyIsInZhbHVlIjoiY3Vfc3Vja3MiLCJlbmFibGVkIjp0cnVlfV0=)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/580ea266bb5347d33aca)
